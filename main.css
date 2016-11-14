@@ -1,0 +1,22 @@
+* {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+form {
+	border: 1px solid green;
+	text-align: center;
+	margin:10%;
+	max-width: 1000px;
+
+}
+
+fieldset {
+	margin-top:2%;
+	margin-left:5%;
+	margin-right:5%;
+	padding-bottom: 25px;
+}
+
+.question-answers {
+}
