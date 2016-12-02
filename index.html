@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="main.css">
+    <title>Companion Plant Quiz</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
+
 <body>
-	<header>
-		
-	</header>
-	<main>
-		<form>
-			<h1>Companion Plant Quiz</h1>
-			<fieldset>
-				<legend>Question 2 of 5</legend>
-				<p>It is good to plant Basil next to all of these plants except:</p>
-				<input type="radio" name="option1"><label>Chard</label>
-				<input type="radio" name="option2"><label>Cucumber</label>
-				<input type="radio" name="option3"><label>Tomato</label>
-				<input type="radio" name="option4"><label>Apricot</label>
-				<button>Submit</button>
-			</fieldset>
-			<div>
-				<p>Incorrect.  The Correct answer is:</p>
-			</div>
-			<div>
-				<p>3 correct, 1 incorrect</p>
-			</div>
-			<div>
-				<button>Start New Game</button>
-			</div>
-		</form>
-	</main>
+    <header>
+        <img src="ronFinleyQuote.jpg">
+    </header>
+    <main>
+        <h1>Companion Plant Quiz</h1>
+        <form id="companion-plant-quiz">
+            <fieldset>
+                <legend id="question-number"></legend>
+                <p id="question"></p>
+                <ul id="answer-choices">
+                </ul>
+                <button id="button-submit">Submit</button>
+            </fieldset>
+        </form>
+            <div>
+                <p id="answer-feedback"></p>
+            </div>
+            <div>
+                <p id="quiz-score"></p>
+            </div>
+            <div>
+                <button id="start-new-game">Start New Game</button>
+            </div>
+  	</main>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
 </body>
+
 </html>
