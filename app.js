@@ -108,7 +108,6 @@ function nextQuestion(state) {
 
 function secCounter() {
     if(state.secCount > 0) {
-        console.log(state.secCount);
         $('#button-submit').text("Next question in " + state.secCount + " seconds");
         var timer = setTimeout(secCounter, 1000);
         state.secCount--;
@@ -129,7 +128,6 @@ function verifyQuestion(state) {
         secCountReset(state);
         var correctAnswer = state.questionsList[state.current].correct;
         var userAnswer = $('input[name="radio"]:checked', $(this)).val();
-        console.log(userAnswer);
         if (userAnswer === undefined) {
             return alert("Please select an answer.");
         }
