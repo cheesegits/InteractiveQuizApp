@@ -1,1 +1,0 @@
-Interactive Quizz App
