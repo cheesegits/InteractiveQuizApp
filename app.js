@@ -1,6 +1,7 @@
 // Module-level global vars
 
 var state = {
+    secCount: 7,
     current: 0,
     score: {
         correct: 0,
@@ -42,6 +43,10 @@ function increaseCurrent(state) {
     state.current++;
 }
 
+function secCountReset(state) {
+    state.secCount = 7;
+}
+
 function scoreCount(state, boolean) {
     if (boolean) {
         state.score.correct++;
@@ -77,19 +82,36 @@ function scoreHTML(state, boolean) {
 }
 
 function nextQuestion(state) {
-    if(state.current < 4) {
+    if (state.current < 4) {
         $('#question-number').empty();
         $('#question').empty();
         $('#answer-choices').empty();
         $('#answer-feedback').empty();
+        $('#button-submit').text("Submit");
+        //secCountReset(state);
+/*        
+        Issue: Calling secCountReset(state) (above) triggers the secCounter() to loop twice and stop.
+        Solution: If secCountReset(state) is located at the start of verifyAnswer then it works correctly.
+        Preference 1: secCounter() doesn't loop twice - call clearTimeout() after setTimeout() inside verifyQuestion()?
+        Preference 2: secCountReset(state) is placed here with the rest of the state/DOM resets when loading the nextQuestion.
+*/        
         increaseCurrent(state);
-        generateQuestion(state);
+        generateQuestion(state);    
     } else {
         $('#question-number').empty();
         $('#question').empty();
         $('#answer-choices').empty();
         $('#answer-feedback').empty();
         endQuiz();
+    }
+}
+
+function secCounter() {
+    if(state.secCount > 0) {
+        console.log(state.secCount);
+        $('#button-submit').text("Next question in " + state.secCount + " seconds");
+        var timer = setTimeout(secCounter, 1000);
+        state.secCount--;
     }
 }
 
@@ -104,38 +126,46 @@ function endQuiz() {
 function verifyQuestion(state) {
     $('#companion-plant-quiz').submit(function(event) {
         event.preventDefault();
+        secCountReset(state);
         var correctAnswer = state.questionsList[state.current].correct;
         var userAnswer = $('input[name="radio"]:checked', $(this)).val();
-        if (userAnswer === correctAnswer) { 
+        console.log(userAnswer);
+        if (userAnswer === undefined) {
+            return alert("Please select an answer.");
+        }
+        if (userAnswer === correctAnswer) {
             scoreCount(state, true);
             scoreHTML(state, true);
+            setTimeout(secCounter, 0);
             setTimeout(nextQuestion, 7000, state);
         } else {
             scoreCount(state, false);
             scoreHTML(state, false);
+            setTimeout(secCounter, 0);
             setTimeout(nextQuestion, 7000, state);
         }
     });
 }
 
 function startNewGame(state) {
-	$('#start-new-game').click(function(event) {
+    $('#start-new-game').click(function(event) {
         event.preventDefault();
-		$('#question-number').empty();
-	    $('#question').empty();
-	    $('#answer-choices').empty();
-	    $('#answer-feedback').empty();
-	    $('#quiz-score').empty();
+        $('#question-number').empty();
+        $('#question').empty();
+        $('#answer-choices').empty();
+        $('#answer-feedback').empty();
+        $('#quiz-score').empty();
+        $('#companion-plant-quiz').show();
         resetState(state);
-		generateQuestion(state);		
-	});
+        generateQuestion(state);
+    });
 
 }
 
 // Main function
 
 $(function() {
-    generateQuestion(state);    
+    generateQuestion(state);
     verifyQuestion(state);
     startNewGame(state);
 });
