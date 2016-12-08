@@ -89,14 +89,14 @@ function nextQuestion(state) {
         $('#answer-feedback').empty();
         $('#button-submit').text("Submit");
         //secCountReset(state);
-/*        
-        Issue: Calling secCountReset(state) (above) triggers the secCounter() to loop twice and stop.
-        Solution: If secCountReset(state) is located at the start of verifyAnswer then it works correctly.
-        Preference 1: secCounter() doesn't loop twice - call clearTimeout() after setTimeout() inside verifyQuestion()?
-        Preference 2: secCountReset(state) is placed here with the rest of the state/DOM resets when loading the nextQuestion.
-*/        
+        /*        
+                Issue: Calling secCountReset(state) (above) triggers the secCounter() to loop twice and stop.
+                Solution: If secCountReset(state) is located at the start of verifyAnswer then it works correctly.
+                Preference 1: secCounter() doesn't loop twice - call clearTimeout() after setTimeout() inside verifyQuestion()?
+                Preference 2: secCountReset(state) is placed here with the rest of the state/DOM resets when loading the nextQuestion.
+        */
         increaseCurrent(state);
-        generateQuestion(state);    
+        generateQuestion(state);
     } else {
         $('#question-number').empty();
         $('#question').empty();
@@ -107,9 +107,9 @@ function nextQuestion(state) {
 }
 
 function secCounter() {
-    if(state.secCount > 0) {
+    if (state.secCount > 0) {
         $('#button-submit').text("Next question in " + state.secCount + " seconds");
-        var timer = setTimeout(secCounter, 1000);
+        setTimeout(secCounter, 1000);
         state.secCount--;
     }
 }
@@ -154,6 +154,7 @@ function startNewGame(state) {
         $('#answer-feedback').empty();
         $('#quiz-score').empty();
         $('#companion-plant-quiz').show();
+        $('#button-submit').text("Submit");
         resetState(state);
         generateQuestion(state);
     });
